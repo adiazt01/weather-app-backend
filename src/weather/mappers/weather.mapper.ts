@@ -47,7 +47,7 @@ export class WeatherMapper {
       name: response[0].name,
       country: response[0].country,
       region: response[0].region,
-      lattitude: response[0].lat,
+      latitude: response[0].lat,
       longitude: response[0].lon,
       id: response[0].id,
       url: response[0].url,

@@ -83,7 +83,7 @@ describe('WeatherController', () => {
     const mockResponse = {
       country: 'United Kingdom',
       id: 123,
-      lattitude: 51.5074,
+      latitude: 51.5074,
       longitude: -0.1278,
       name: 'London',
       region: 'England',
@@ -93,7 +93,7 @@ describe('WeatherController', () => {
     jest.spyOn(weatherService, 'getAutocomplete').mockResolvedValue({
       country: 'United Kingdom',
       id: 123,
-      lattitude: 51.5074,
+      latitude: 51.5074,
       longitude: -0.1278,
       name: 'London',
       region: 'England',

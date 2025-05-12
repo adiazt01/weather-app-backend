@@ -7,9 +7,8 @@ describe("CreateFavoriteDto", () => {
         dto.name = "London";
         dto.region = "England";
         dto.country = "United Kingdom";
-        dto.lattitude = 51.5074;
+        dto.latitude = 51.5074;
         dto.longitude = -0.1278;
-        dto.url = "https://example.com/london";
 
         const errors = await validate(dto);
         expect(errors.length).toBe(0);
@@ -21,7 +20,7 @@ describe("CreateFavoriteDto", () => {
         const errors = await validate(dto);
         expect(errors.length).toBeGreaterThan(0);
         expect(errors.map(err => err.property)).toEqual(
-            expect.arrayContaining(["name", "region", "country", "lattitude", "longitude"])
+            expect.arrayContaining(["name", "region", "country", "latitude", "longitude"])
         );
     });
 
@@ -30,7 +29,7 @@ describe("CreateFavoriteDto", () => {
         dto.name = "a".repeat(101); // Exceeds max length of 100
         dto.region = "England";
         dto.country = "United Kingdom";
-        dto.lattitude = 51.5074;
+        dto.latitude = 51.5074;
         dto.longitude = -0.1278;
 
         const errors = await validate(dto);
@@ -43,12 +42,12 @@ describe("CreateFavoriteDto", () => {
         dto.name = "London";
         dto.region = "England";
         dto.country = "United Kingdom";
-        dto.lattitude = 100;
+        dto.latitude = 100;
         dto.longitude = -0.1278;
 
         const errors = await validate(dto);
         expect(errors.length).toBeGreaterThan(0);
-        expect(errors[0].property).toBe("lattitude");
+        expect(errors[0].property).toBe("latitude");
     });
 
     it("should fail validation if longitude is invalid", async () => {
@@ -56,7 +55,7 @@ describe("CreateFavoriteDto", () => {
         dto.name = "London";
         dto.region = "England";
         dto.country = "United Kingdom";
-        dto.lattitude = 51.5074;
+        dto.latitude = 51.5074;
         dto.longitude = 200;
 
         const errors = await validate(dto);
@@ -69,9 +68,8 @@ describe("CreateFavoriteDto", () => {
         dto.name = "London";
         dto.region = "England";
         dto.country = "United Kingdom";
-        dto.lattitude = 51.5074;
+        dto.latitude = 51.5074;
         dto.longitude = -0.1278;
-        dto.url = "invalid-url"; // Invalid URL
 
         const errors = await validate(dto);
         expect(errors.length).toBeGreaterThan(0);

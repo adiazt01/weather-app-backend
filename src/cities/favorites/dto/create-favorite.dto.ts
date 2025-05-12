@@ -43,7 +43,7 @@ export class CreateFavoriteDto {
     country: string;
 
     @ApiProperty({
-        description: "Lattitude of the favorite city",
+        description: "latitude of the favorite city",
         example: 51.5074,
         required: true,
         type: Number,
@@ -53,7 +53,7 @@ export class CreateFavoriteDto {
     @IsLatitude()
     @IsNumber()
     @IsNotEmpty()
-    lattitude: number;
+    latitude: number;
 
     @ApiProperty({
         description: "Longitude of the favorite city",
@@ -67,18 +67,4 @@ export class CreateFavoriteDto {
     @IsNumber()
     @IsNotEmpty()
     longitude: number;
-
-    @ApiProperty({
-        description: "URL of the favorite city",
-        example: "https://example.com/london",
-        required: false,
-        type: String,
-        nullable: true,
-    })
-    @MinLength(1)
-    @MaxLength(200)
-    @IsNotEmpty()
-    @IsUrl()
-    @IsString()
-    url?: string;
 }

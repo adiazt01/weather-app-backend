@@ -37,12 +37,12 @@ export class CityFavorite extends EntityAbstract {
     country: string;
 
     @Column({
-        name: "lattitude",
+        name: "latitude",
         type: "float",
-        comment: "Lattitude of the city",
+        comment: "latitude of the city",
         nullable: false,
     })
-    lattitude: number;
+    latitude: number;
 
     @Column({
         name: "longitude",

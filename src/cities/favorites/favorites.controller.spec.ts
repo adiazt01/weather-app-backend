@@ -31,7 +31,7 @@ describe('FavoritesController', () => {
       name: 'London',
       region: 'England',
       country: 'United Kingdom',
-      lattitude: 51.5074,
+      latitude: 51.5074,
       longitude: -0.1278,
       url: 'https://example.com/london',
     };

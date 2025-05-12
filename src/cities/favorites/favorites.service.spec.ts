@@ -40,7 +40,7 @@ describe('FavoritesService', () => {
       name: 'Test City', 
       region: 'Test Region', 
       country: 'Test Country', 
-      lattitude: 0, 
+      latitude: 0, 
       longitude: 0 
     };
     
@@ -67,7 +67,7 @@ describe('FavoritesService', () => {
       name: 'Test City',
       region: 'Test Region',
       country: 'Test Country',
-      lattitude: 0,
+      latitude: 0,
       longitude: 0,
       user: {
         id: 1,
@@ -92,7 +92,7 @@ describe('FavoritesService', () => {
   });
 
   it('should throw an error if saving fails', async () => {
-    const createFavoriteDto = { name: 'Test City', region: 'Test Region', country: 'Test Country', lattitude: 0, longitude: 0 };
+    const createFavoriteDto = { name: 'Test City', region: 'Test Region', country: 'Test Country', latitude: 0, longitude: 0 };
     const userId = 1;
 
     jest.spyOn(cityFavoriteRepository, 'save').mockRejectedValue(new Error('Database save error'));
@@ -107,7 +107,7 @@ describe('FavoritesService', () => {
       name: 'Test City',
       region: 'Test Region',
       country: 'Test Country',
-      lattitude: 0,
+      latitude: 0,
       longitude: 0,
       user: {
         id: userId,
@@ -146,7 +146,7 @@ describe('FavoritesService', () => {
       name: 'Test City',
       region: 'Test Region',
       country: 'Test Country',
-      lattitude: 0,
+      latitude: 0,
       longitude: 0,
       user: {
         id: userId,
@@ -186,7 +186,7 @@ describe('FavoritesService', () => {
       name: 'Test City',
       region: 'Test Region',
       country: 'Test Country',
-      lattitude: 0,
+      latitude: 0,
       longitude: 0,
       user: {
         id: userId,
@@ -228,7 +228,7 @@ describe('FavoritesService', () => {
       name: 'Test City', 
       region: 'Test Region', 
       country: 'Test Country', 
-      lattitude: 0, 
+      latitude: 0, 
       longitude: 0, 
       userId, 
       user: { 

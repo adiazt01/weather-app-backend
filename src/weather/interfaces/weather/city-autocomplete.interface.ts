@@ -3,7 +3,7 @@ export interface CityAutocomplete {
   name: string;
   region: string;
   country: string;
-  lattitude: number;
+  latitude: number;
   longitude: number;
   url: string;
 }

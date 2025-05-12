@@ -18,6 +18,7 @@ export class FavoritesService {
 
   async create(createFavoriteDto: CreateFavoriteDto, userId: number): Promise<CityFavorite> {
     try {
+      console.log(createFavoriteDto)
       const cityFavorite = this.cityFavoriteRepository.create({ ...createFavoriteDto, user: { id: userId } });
       this.logger.log(`Creating favorite city for user ID: ${userId}`); 
       return await this.cityFavoriteRepository.save(cityFavorite);
