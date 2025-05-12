@@ -3,7 +3,9 @@ import { CreateFavoriteDto } from './dto/create-favorite.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CityFavorite } from './entities/city-favorite.entity';
 import { Repository } from 'typeorm';
-import { User } from 'src/core/users/entities/user.entity';
+import { PaginationOptionsDto } from 'src/common/dtos/pagination/pagination-options.dto';
+import { PaginationDto } from 'src/common/dtos/pagination/pagination.dto';
+import { paginate } from 'src/common/helpers/pagination.helper';
 
 @Injectable()
 export class FavoritesService {
@@ -17,40 +19,56 @@ export class FavoritesService {
   async create(createFavoriteDto: CreateFavoriteDto, userId: number): Promise<CityFavorite> {
     try {
       const cityFavorite = this.cityFavoriteRepository.create({ ...createFavoriteDto, user: { id: userId } });
+      this.logger.log(`Creating favorite city for user ID: ${userId}`); 
       return await this.cityFavoriteRepository.save(cityFavorite);
     } catch (error) {
-      throw new InternalServerErrorException('Error creating favorite city');
+      throw this.handleError(error);
     }
   }
 
-  async findAll(userId: number) {
+  async findAll(paginationOptionsDto: PaginationOptionsDto, userId: number): Promise<PaginationDto<CityFavorite>> {
     try {
-      return await this.cityFavoriteRepository.find({ where: { user: { id: userId } as User } });
+      const queryBuilder = this.cityFavoriteRepository.createQueryBuilder('cityFavorite')
+        .where('cityFavorite.userId = :userId', { userId });
+
+      return await paginate<CityFavorite>(queryBuilder, paginationOptionsDto);
     } catch (error) {
-      throw new InternalServerErrorException('Error fetching favorite cities');
+      throw this.handleError(error);
     }
   }
 
-  async findOne(id: string, userId: number) {
+  async findOne(id: string, userId: number): Promise<CityFavorite> {
     try {
-      return await this.cityFavoriteRepository.findOne({ where: { id, user: { id: userId } as User  } });
+      const cityFavorite = await this.cityFavoriteRepository.findOne({ where: { id, user: { id: userId } } });
+      
+      if (!cityFavorite) {
+        throw new NotFoundException('Favorite city not found');
+      }
+
+      return cityFavorite;
     } catch (error) {
-      throw new InternalServerErrorException('Error fetching the favorite city');
+      throw this.handleError(error);
     }
   }
 
   async remove(id: string, userId: number): Promise<CityFavorite> {
     try {
-      const cityFavorite = await this.cityFavoriteRepository.findOne({ where: { id, user: { id: userId } } });
-      if (!cityFavorite) {
-        throw new NotFoundException('Favorite city not found');
-      }
-      return await this.cityFavoriteRepository.remove(cityFavorite);
+      const cityFavorite = await this.findOne(id, userId);
+
+      await this.cityFavoriteRepository.remove(cityFavorite);
+
+      return cityFavorite;
     } catch (error) {
-      if (error instanceof NotFoundException) {
-        throw error;
-      }
-      throw new InternalServerErrorException('Error removing the favorite city');
+      throw this.handleError(error);
     }
+  }
+
+  private handleError(error: Error): void {
+    if (error instanceof NotFoundException) {
+      this.logger.warn(`Not Found: ${error.message}`);
+      throw error;
+    }
+    
+    throw new InternalServerErrorException('An unexpected error occurred');
   }
 }

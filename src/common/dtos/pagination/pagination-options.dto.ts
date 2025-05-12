@@ -36,4 +36,15 @@ export class PaginationOptionsDto {
     @IsInt()
     @Min(1)
     take?: number = 10;
+
+    @ApiPropertyOptional({
+        default: 0,
+        description: 'Number of items to skip',
+        example: 0,
+    })
+    @IsOptional()
+    @Type(() => Number)
+    @IsInt()
+    @Min(0)
+    skip?: number = 0;
 }

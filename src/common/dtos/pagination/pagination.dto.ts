@@ -7,10 +7,15 @@ export class PaginationDto<T> {
     @ApiProperty({
         isArray: true,
     })
-    items: T[];
+    data: T[];
     
     @ApiProperty({
         type: () => PaginationMetaDto,
     })
     meta: PaginationMetaDto;
+
+    constructor(data: T[], meta: PaginationMetaDto) {
+        this.data = data;
+        this.meta = meta;
+      }
 }
